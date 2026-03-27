@@ -2,7 +2,7 @@
   "name": "مراجعة الفلسفة - 2باك علوم إنسانية",
   "short_name": "فلسفة 2باك",
   "description": "تطبيق لمراجعة مادة الفلسفة لتلاميذ الباكالوريا - شعبة العلوم الإنسانية",
-  "start_url": "ph-index.html",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#f0fdfa",
   "theme_color": "#0f766e",
