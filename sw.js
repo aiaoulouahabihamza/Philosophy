@@ -1,6 +1,6 @@
 const CACHE_NAME = 'philosophy-app-v1';
 const urlsToCache = [
-  'ph-index.html',
+  'index.html',
   'ph-style.css',
   'ph-main.js',
   'ph-data.json',
