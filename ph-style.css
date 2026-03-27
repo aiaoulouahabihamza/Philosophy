@@ -1,0 +1,470 @@
+:root {
+    --primary: #0f766e;
+    --primary-light: #14b8a6;
+    --bg-color: #f0fdfa;
+    --card-bg: #ffffff;
+    --text-main: #134e4a;
+    --text-sec: #64748b;
+    --radius: 16px;
+    --shadow: 0 4px 20px rgba(15, 118, 110, 0.08);
+}
+
+@font-face {
+    font-family: alyamama;
+    src: url(alyamama.ttf);
+}
+
+@font-face {
+    font-family: magrabi;
+    src: url(magrabi.ttf);}
+    
+    
+    body {
+        font-family: 'alyamama', sans-serif;
+        background: var(--bg-color);
+        color: var(--text-main);
+        margin: 0;
+        padding-bottom: 50px;
+    }
+    
+    /* Header */
+    .simple-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 5%;
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    
+    .back-btn {
+        text-decoration: none;
+        color: var(--primary);
+        font-size: 1.2rem;
+    }
+    
+    .header-title {
+        font-family: 'magrabi';
+        font-weight: 500;
+        font-size: 3.5rem;
+        color: var(--primary);
+    }
+    
+    /* Views */
+    .view {
+        display: none;
+        animation: fadeIn 0.4s;
+        padding: 20px 5%;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .view.active {
+        display: block;
+    }
+    
+    .view.hidden {
+        display: none;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Common */
+    .subject-header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding-top: 20px;
+    }
+    
+    .icon-circle {
+        width: 70px;
+        height: 70px;
+        background: rgba(15, 118, 110, 1);
+        color: var(--primary);
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+    
+    h1,
+    h2 {
+        font-family: 'alyamama',serif;
+        color: var(--primary);
+    }
+    
+    .section-title {
+        font-size: 1.6rem;
+        border-right: 4px solid var(--primary-light);
+        padding-right: 15px;
+        margin: 20px 0;
+    }
+    
+    .back-nav-btn {
+        background: none;
+        border: none;
+        color: var(--text-sec);
+        font-family: 'magrabi';
+        font-weight: 300;
+        font-size: 29px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+    
+    .back-nav-btn:hover {
+        color: var(--primary);
+    }
+    
+    /* Lists (Modules, Concepts, Axes) */
+    .modules-grid,
+    .concepts-list,
+    .axes-grid {
+        display: grid;
+        gap: 15px;
+    }
+    
+    .module-card,
+    .concept-item,
+    .axis-card {
+        background: #fff;
+        padding: 20px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        cursor: pointer;
+        transition: 0.3s;
+        border-right: 4px solid var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .module-card:hover,
+    .concept-item:hover,
+    .axis-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(15, 118, 110, 0.15);
+        border-right-width: 6px;
+    }
+    
+    .module-info h3,
+    .concept-item h4,
+    .axis-card h3 {
+        margin: 0;
+        font-size: 1.1rem;
+    }
+    
+    /* Lesson View (The Core Request) */
+    .breadcrumb {
+        background: #fff;
+        padding: 10px 15px;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        color: var(--text-sec);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .breadcrumb span {
+        color: var(--primary);
+        font-weight: 700;
+    }
+    
+    .breadcrumb i {
+        font-size: 0.7rem;
+        color: #cbd5e1;
+    }
+    
+    .lesson-container {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .lesson-section {
+        background: #fff;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        border: 1px solid #e2e8f0;
+    }
+    
+    .section-icon {
+        background: rgba(15, 118, 110, 0.1);
+        color: var(--primary);
+        padding: 15px;
+        display: inline-block;
+        border-bottom-left-radius: 50%;
+        margin: -1px -1px 0 -1px;
+        /* Align with border */
+    }
+    
+    /* Fix icon position for RTL */
+    .section-icon {
+        float: right;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 50px;
+    }
+    
+    .section-heading {
+        margin: 0;
+        padding: 15px 60px 15px 20px;
+        font-size: 1.3rem;
+        color: var(--text-main);
+        border-bottom: 1px solid #f1f5f9;
+    }
+    
+    /* Problem Section */
+    .problem-text {
+        padding: 20px;
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #d97706;
+        font-weight: 600;
+        background: #fffbeb;
+        margin: 0;
+        border-top: 1px dashed #fcd34d;
+    }
+    
+    /* Concepts Grid inside Lesson */
+    .concepts-grid-detail {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        padding: 20px;
+    }
+    
+    .concept-card-detail {
+        background: #f8fafc;
+        padding: 15px;
+        border-radius: 10px;
+        border-right: 3px solid var(--primary-light);
+    }
+    
+    .concept-term {
+        font-weight: 700;
+        color: var(--primary);
+        display: block;
+        margin-bottom: 8px;
+        font-size: 1.1rem;
+    }
+    
+    .concept-def {
+        font-size: 0.95rem;
+        color: var(--text-sec);
+        line-height: 1.6;
+        margin: 0;
+    }
+    
+    /* Theses Stream */
+    .theses-stream {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .thesis-card {
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 20px;
+        position: relative;
+    }
+    
+    .thesis-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 4px;
+        height: 100%;
+        background: var(--primary);
+        border-top-right-radius: 12px;
+        border-bottom-right-radius: 12px;
+    }
+    
+    .philosopher-tag {
+        display: inline-block;
+        background: var(--primary);
+        color: #fff;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+    
+    .thesis-content {
+        font-size: 1rem;
+        line-height: 1.8;
+        text-align: justify;
+        color: #334155;
+    }
+    
+    .thesis-quote {
+        display: block;
+        margin-top: 15px;
+        padding: 10px;
+        background: #f0fdfa;
+        border-right: 3px solid var(--primary-light);
+        font-style: italic;
+        color: #0f766e;
+        font-size: 0.95rem;
+    }
+    
+    .lesson-footer {
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 50px;
+    }
+    
+    .finish-btn {
+        background: var(--text-sec);
+        color: #fff;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-size: 1.8rem;
+        font-family: 'magrabi';
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    
+    .finish-btn:hover {
+        background: var(--primary);
+        transform: scale(1.05);
+    }
+    
+    @media (max-width: 600px) {
+        
+        .module-card,
+        .concept-item,
+        .axis-card {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .section-heading {
+            padding: 15px 50px 15px 15px;
+            font-size: 1.1rem;
+        }
+        
+        .concepts-grid-detail {
+            grid-template-columns: 1fr;
+        }
+    }
+    /* PWA Install Banner */
+.install-banner {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white;
+    padding: 16px 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    z-index: 1000;
+    box-shadow: 0 10px 40px rgba(15, 118, 110, 0.3);
+    transform: translateY(120px);
+    transition: transform 0.4s ease;
+}
+
+.install-banner.show {
+    transform: translateY(0);
+}
+
+.install-banner-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+}
+
+.install-banner-icon {
+    background: rgba(255,255,255,0.2);
+    width: 48px;
+    height: 48px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+}
+
+.install-banner-text {
+    flex: 1;
+}
+
+.install-banner-title {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.install-banner-subtitle {
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+.install-banner-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.install-btn {
+    background: white;
+    color: var(--primary);
+    border: none;
+    padding: 8px 18px;
+    border-radius: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.close-install-btn {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.5);
+    color: white;
+    padding: 8px 18px;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+@media (min-width: 768px) {
+    .install-banner {
+        left: auto;
+        right: 20px;
+        width: 380px;
+        bottom: 20px;
+    }
+}

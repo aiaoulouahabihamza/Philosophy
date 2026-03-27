@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الفلسفة - منصة المراجعة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="ph-style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="فلسفة 2باك">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0f766e">
+<link rel="icon" href="img.jpg"/>
+</head>
+<body>
+
+    <!-- Header بسيط -->
+    <header class="simple-header">
+        <a href="ph-index.html" class="back-btn">
+            <i class="fas fa-home"></i>
+        </a>
+        <div class="header-title" id="header-title">الفلسفة</div>
+        <div style="width: 40px;"></div>
+    </header>
+
+    <main>
+        <!-- المستوى 1: المجزوءات -->
+        <section id="modules-view" class="view active">
+            <div class="subject-header">
+                <div class="icon-circle"><i class="fas fa-brain"></i></div>
+                <h1>مجزوءات الفلسفة</h1>
+                <p>اختر المجزوءة للبدء</p>
+            </div>
+            <div id="modules-container" class="modules-grid"></div>
+        </section>
+
+        <!-- المستوى 2: مفاهيم المجزوءة -->
+        <section id="concepts-view" class="view hidden">
+            <button class="back-nav-btn" onclick="goToModules()"><i class="fas fa-arrow-right"></i> عودة للمجزوءات</button>
+            <h2 id="selected-module-title" class="section-title"></h2>
+            <div id="concepts-container" class="concepts-list"></div>
+        </section>
+
+        <!-- المستوى 3: محاور المفهوم -->
+        <section id="axes-view" class="view hidden">
+            <button class="back-nav-btn" onclick="goToConcepts()"><i class="fas fa-arrow-right"></i> عودة للمفاهيم</button>
+            <h2 id="selected-concept-title" class="section-title"></h2>
+            <div id="axes-container" class="axes-grid"></div>
+        </section>
+
+        <!-- المستوى 4: عرض الدرس المتكامل (بدون تبويبات) -->
+        <section id="lesson-view" class="view hidden">
+            <!-- شريط التنقل Breadcrumb -->
+            <nav class="breadcrumb" id="breadcrumb-nav">
+                <!-- سيتم ملؤه بواسطة JS -->
+            </nav>
+
+            <div class="lesson-container">
+                <!-- 1. الإشكال -->
+                <div class="lesson-section problem-section">
+                    <div class="section-icon"><i class="fas fa-question-circle"></i></div>
+                    <h2 class="section-heading">الإشكال</h2>
+                    <p id="lesson-problem" class="problem-text"></p>
+                </div>
+
+                <!-- 2. المفاهيم -->
+                <div class="lesson-section concepts-section">
+                    <div class="section-icon"><i class="fas fa-book-open"></i></div>
+                    <h2 class="section-heading">المفاهيم</h2>
+                    <div id="lesson-concepts" class="concepts-grid-detail"></div>
+                </div>
+
+                <!-- 3. الأطروحات -->
+                <div class="lesson-section theses-section">
+                    <div class="section-icon"><i class="fas fa-users"></i></div>
+                    <h2 class="section-heading">الأطروحات الفلسفية</h2>
+                    <div id="lesson-theses" class="theses-stream"></div>
+                </div>
+                
+                <!-- زر الأشكال (اختياري إذا توفرت صور لاحقاً) -->
+                <div class="lesson-section diagrams-section" style="display:none;" id="diagrams-sec">
+                    <div class="section-icon"><i class="fas fa-project-diagram"></i></div>
+                    <h2 class="section-heading">الأشكال البيانية</h2>
+                    <p style="text-align:center; color:#94a3b8;">قريباً...</p>
+                </div>
+            </div>
+            
+            <div class="lesson-footer">
+                <button class="finish-btn" onclick="goToAxes()">إنهاء الدرس والعودة</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="ph-main.js"></script>
+    <script>
+        function goToModules() { switchView('modules-view'); document.getElementById('header-title').textContent = 'الفلسفة'; }
+        function goToConcepts() { switchView('concepts-view'); }
+        function goToAxes() { switchView('axes-view'); }
+        
+        function switchView(viewId) {
+            document.querySelectorAll('.view').forEach(el => { el.classList.remove('active'); el.classList.add('hidden'); });
+            document.getElementById(viewId).classList.remove('hidden');
+            document.getElementById(viewId).classList.add('active');
+            window.scrollTo(0,0);
+        }
+        // ==================== PWA Code ====================
+let deferredPrompt;
+let isInstalled = localStorage.getItem('pwa-installed') === 'true';
+
+// التحقق إذا كان التطبيق مثبتاً بالفعل
+if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+    isInstalled = true;
+    localStorage.setItem('pwa-installed', 'true');
+}
+
+// عرض رسالة التثبيت
+function showInstallBanner() {
+    if (isInstalled) return;
+    if (document.getElementById('installBanner')) return;
+    
+    const banner = document.createElement('div');
+    banner.id = 'installBanner';
+    banner.className = 'install-banner';
+    banner.innerHTML = `
+        <div class="install-banner-content">
+            <div class="install-banner-icon">
+                <i class="fas fa-download"></i>
+            </div>
+            <div class="install-banner-text">
+                <div class="install-banner-title">ثبّت التطبيق</div>
+                <div class="install-banner-subtitle">استخدم التطبيق بدون إنترنت</div>
+            </div>
+        </div>
+        <div class="install-banner-buttons">
+            <button class="install-btn" id="confirmInstall"><i class="fas fa-plus-circle"></i> تثبيت</button>
+            <button class="close-install-btn" id="closeInstallBanner"><i class="fas fa-times"></i></button>
+        </div>
+    `;
+    document.body.appendChild(banner);
+    
+    setTimeout(() => banner.classList.add('show'), 100);
+    
+    document.getElementById('confirmInstall').addEventListener('click', () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(choiceResult => {
+                if (choiceResult.outcome === 'accepted') {
+                    isInstalled = true;
+                    localStorage.setItem('pwa-installed', 'true');
+                }
+                deferredPrompt = null;
+            });
+        }
+        banner.remove();
+    });
+    
+    document.getElementById('closeInstallBanner').addEventListener('click', () => {
+        banner.classList.remove('show');
+        setTimeout(() => banner.remove(), 400);
+        localStorage.setItem('pwa-banner-dismissed', Date.now());
+    });
+}
+
+// تسجيل Service Worker
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+        .then(reg => console.log('SW registered:', reg.scope))
+        .catch(err => console.log('SW failed:', err));
+}
+
+// الاستماع لحدث التثبيت
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    const lastDismissed = localStorage.getItem('pwa-banner-dismissed');
+    if (!lastDismissed || (Date.now() - parseInt(lastDismissed) > 7 * 24 * 60 * 60 * 1000)) {
+        if (!isInstalled && !document.getElementById('installBanner')) {
+            showInstallBanner();
+        }
+    }
+});
+
+// عند تثبيت التطبيق
+window.addEventListener('appinstalled', () => {
+    isInstalled = true;
+    localStorage.setItem('pwa-installed', 'true');
+    const banner = document.getElementById('installBanner');
+    if (banner) banner.remove();
+});
+    </script>
+    
+</body>
+</html>
