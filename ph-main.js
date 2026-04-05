@@ -4,12 +4,26 @@ let currentConcept = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     fetch('ph-data.json')
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                throw new Error('فشل تحميل البيانات');
+            }
+            return res.json();
+        })
         .then(data => {
             allData = data;
             renderModules(data.modules);
         })
-        .catch(err => console.error("Error:", err));
+        .catch(err => {
+            console.error("خطأ:", err);
+            const container = document.getElementById('modules-container');
+            if (container) {
+                container.innerHTML = `<div style="text-align: center; padding: 40px; color: #e74c3c;">
+                    <p style="font-size: 1.2rem; margin-bottom: 10px;">عذراً، حدث خطأ في تحميل البيانات</p>
+                    <p style="font-size: 0.9rem; color: #7f8c8d;">يرجى التحقق من اتصالك بالإنترنت وحاول مرة أخرى</p>
+                </div>`;
+            }
+        });
 });
 
 // --- Level 1: Modules ---
@@ -133,8 +147,188 @@ function openLesson(axis) {
 }
 
 function switchView(viewId) {
+    const targetView = document.getElementById(viewId);
+    if (!targetView) {
+        console.error('العرض المطلوب غير موجود:', viewId);
+        return;
+    }
     document.querySelectorAll('.view').forEach(el => { el.classList.remove('active'); el.classList.add('hidden'); });
-    document.getElementById(viewId).classList.remove('hidden');
-    document.getElementById(viewId).classList.add('active');
+    targetView.classList.remove('hidden');
+    targetView.classList.add('active');
     window.scrollTo(0,0);
 }
+
+// ===== Search Functionality =====
+let searchModal = null;
+let searchInput = null;
+let searchResults = null;
+
+function initSearch() {
+    searchModal = document.getElementById('search-modal');
+    searchInput = document.getElementById('search-input');
+    searchResults = document.getElementById('search-results');
+    const searchBtn = document.getElementById('search-btn');
+
+    // Open search on button click
+    if (searchBtn) {
+        searchBtn.addEventListener('click', openSearch);
+    }
+
+    // Search input listener
+    if (searchInput) {
+        searchInput.addEventListener('input', performSearch);
+    }
+
+    // Close search on ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && searchModal && !searchModal.classList.contains('hidden')) {
+            closeSearch();
+        }
+        // Open search on Ctrl+K or Cmd+K
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            openSearch();
+        }
+    });
+
+    // Close search when clicking outside
+    if (searchModal) {
+        searchModal.addEventListener('click', (e) => {
+            if (e.target === searchModal) {
+                closeSearch();
+            }
+        });
+    }
+}
+
+function openSearch() {
+    if (searchModal) {
+        searchModal.classList.remove('hidden');
+        if (searchInput) {
+            searchInput.focus();
+            searchInput.value = '';
+            searchResults.innerHTML = '';
+        }
+    }
+}
+
+function closeSearch() {
+    if (searchModal) {
+        searchModal.classList.add('hidden');
+    }
+}
+
+function performSearch() {
+    const query = searchInput.value.trim().toLowerCase();
+    
+    if (!query) {
+        searchResults.innerHTML = '';
+        return;
+    }
+
+    if (!allData) {
+        searchResults.innerHTML = '<div style="padding: 20px; text-align: center; color: #94a3b8;">جاري البحث...</div>';
+        return;
+    }
+
+    const results = [];
+
+    // Search in modules, concepts, axes, and theses
+    allData.modules.forEach(module => {
+        if (module.title.includes(query)) {
+            results.push({
+                type: 'module',
+                title: module.title,
+                subtitle: 'مجزوءة',
+                data: module
+            });
+        }
+
+        module.concepts.forEach(concept => {
+            if (concept.title.includes(query)) {
+                results.push({
+                    type: 'concept',
+                    title: concept.title,
+                    subtitle: `مفهوم في ${module.title}`,
+                    data: { concept, module }
+                });
+            }
+
+            concept.axes.forEach(axis => {
+                if (axis.title.includes(query) || axis.problem.includes(query)) {
+                    results.push({
+                        type: 'axis',
+                        title: axis.title,
+                        subtitle: `${concept.title} - ${module.title}`,
+                        data: { axis, concept, module }
+                    });
+                }
+
+                // Search in concepts definitions
+                if (axis.concepts) {
+                    axis.concepts.forEach(c => {
+                        if (c.term.includes(query) || c.definition.includes(query)) {
+                            results.push({
+                                type: 'concept-def',
+                                title: c.term,
+                                subtitle: `مفهوم في ${axis.title}`,
+                                data: { concept: c, axis, module }
+                            });
+                        }
+                    });
+                }
+
+                // Search in theses
+                if (axis.theses) {
+                    axis.theses.forEach(thesis => {
+                        if (thesis.philosopher.includes(query) || thesis.text.includes(query)) {
+                            results.push({
+                                type: 'thesis',
+                                title: thesis.philosopher,
+                                subtitle: `أطروحة في ${axis.title}`,
+                                data: { thesis, axis, module }
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    });
+
+    // Display results
+    if (results.length === 0) {
+        searchResults.innerHTML = '<div style="padding: 20px; text-align: center; color: #94a3b8;">لا توجد نتائج</div>';
+    } else {
+        searchResults.innerHTML = results.slice(0, 10).map((result, index) => `
+            <div class="search-result-item" onclick="handleSearchResult(${index}, ${JSON.stringify(result).replace(/"/g, '&quot;')})">
+                <div class="search-result-title">${result.title}</div>
+                <div class="search-result-subtitle">${result.subtitle}</div>
+            </div>
+        `).join('');
+    }
+}
+
+function handleSearchResult(index, result) {
+    result = JSON.parse(JSON.stringify(result));
+    closeSearch();
+
+    if (result.type === 'module') {
+        selectModule(result.data);
+    } else if (result.type === 'concept') {
+        selectModule(result.data.module);
+        setTimeout(() => selectConcept(result.data.concept), 100);
+    } else if (result.type === 'axis') {
+        selectModule(result.data.module);
+        setTimeout(() => selectConcept(result.data.concept), 100);
+        setTimeout(() => openLesson(result.data.axis), 200);
+    } else if (result.type === 'concept-def' || result.type === 'thesis') {
+        selectModule(result.data.module);
+        setTimeout(() => selectConcept(result.data.concept || result.data.axis.concepts?.[0]), 100);
+        setTimeout(() => openLesson(result.data.axis), 200);
+    }
+}
+
+// Initialize search when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    initSearch();
+});

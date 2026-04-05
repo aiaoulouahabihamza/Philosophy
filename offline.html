@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بدون اتصال - الفلسفة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', 'alyamama', sans-serif;
+            background: linear-gradient(135deg, #F8F2EF 0%, #E1D7D2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .offline-container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px 30px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(76, 99, 124, 0.15);
+        }
+
+        .offline-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            color: #4C637C;
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        p {
+            color: #7F8C8D;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .offline-tips {
+            background: #F8F2EF;
+            border-right: 4px solid #CEB88E;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: right;
+            margin-bottom: 30px;
+        }
+
+        .offline-tips h3 {
+            color: #4C637C;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+
+        .offline-tips ul {
+            list-style: none;
+            text-align: right;
+        }
+
+        .offline-tips li {
+            color: #7F8C8D;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            padding-right: 20px;
+            position: relative;
+        }
+
+        .offline-tips li:before {
+            content: "✓";
+            position: absolute;
+            right: 0;
+            color: #CEB88E;
+            font-weight: bold;
+        }
+
+        .retry-btn {
+            background: linear-gradient(135deg, #4C637C, #CEB88E);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .retry-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(76, 99, 124, 0.3);
+        }
+
+        .home-btn {
+            background: #E1D7D2;
+            color: #4C637C;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .home-btn:hover {
+            background: #CEB88E;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">📡</div>
+        <h1>أنت بدون اتصال بالإنترنت</h1>
+        <p>يبدو أن الاتصال بالإنترنت قد انقطع. لكن لا تقلق، يمكنك الوصول إلى المحتوى المحفوظ مسبقاً على جهازك.</p>
+        
+        <div class="offline-tips">
+            <h3>ماذا يمكنك أن تفعل؟</h3>
+            <ul>
+                <li>استعرض المحتوى المحفوظ مسبقاً</li>
+                <li>ابحث عن المفاهيم والأطروحات</li>
+                <li>راجع ملاحظاتك</li>
+            </ul>
+        </div>
+
+        <button class="retry-btn" onclick="location.reload()">إعادة المحاولة</button>
+        <br>
+        <a href="index.html" class="home-btn">العودة للرئيسية</a>
+    </div>
+</body>
+</html>

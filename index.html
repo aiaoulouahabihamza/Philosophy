@@ -3,15 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="تطبيق مراجعة الفلسفة لتلاميذ الباكالوريا - العلوم الإنسانية. ابحث عن مفاهيم وأطروحات فلسفية بسهولة.">
+    <meta name="keywords" content="فلسفة, باكالوريا, مراجعة, مفاهيم, أطروحات, علوم إنسانية, تعليم">
+    <meta name="author" content="Manus Philosophy App">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="مراجعة الفلسفة - 2باك">
+    <meta property="og:description" content="تطبيق ويب لمراجعة الفلسفة مع بحث متقدم وعمل بدون إنترنت.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
     <title>الفلسفة - منصة المراجعة</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="ph-style.css">
-<link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="فلسفة 2باك">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#0f766e">
+<meta name="theme-color" content="#4C637C">
 <link rel="icon" href="img.jpg"/>
 </head>
 <body>
@@ -22,14 +30,25 @@
             <i class="fas fa-home"></i>
         </a>
         <div class="header-title" id="header-title">الفلسفة</div>
-        <div style="width: 40px;"></div>
+        <button class="search-btn" id="search-btn" title="ابحث (Ctrl+K)">
+            <i class="fas fa-search"></i>
+        </button>
     </header>
 
     <main>
+        <!-- شريط البحث -->
+        <div id="search-modal" class="search-modal hidden">
+            <div class="search-container">
+                <input type="text" id="search-input" class="search-input" placeholder="ابحث عن مفاهيم، أطروحات، فلاسفة..." autofocus>
+                <div id="search-results" class="search-results"></div>
+                <div class="search-hint">اضغط ESC للإغلاق</div>
+            </div>
+        </div>
+
         <!-- المستوى 1: المجزوءات -->
         <section id="modules-view" class="view active">
             <div class="subject-header">
-                <div class="icon-circle"><i class="fas fa-brain"></i></div>
+                <div class="icon-circle" style="display: inline-flex; margin: 0 auto 15px;"><i class="fas fa-brain" style="color: #FFFFFF;"></i></div>
                 <h1>مجزوءات الفلسفة</h1>
                 <p>اختر المجزوءة للبدء</p>
             </div>
